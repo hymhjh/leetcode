@@ -1,0 +1,30 @@
+public class Solution {
+    public String minWindow(String s, String t) {
+        char[] cs = s.toCharArray();
+        int[] letter = new int[58];
+        for(int i=0; i<t.length(); i++){
+            letter[t.charAt(i) - 'A']++;
+        }
+        for(int i=0; i<58; i++){
+            if(letter[i] == 0) letter[i] = Integer.MIN_VALUE;
+        }
+        int start = 0, len = 0, h = 0, f = 0;
+        for(int i=0; i<cs.length; i++){
+            if(letter[cs[i] - 'A'] > Integer.MIN_VALUE) {
+                if(letter[cs[i] - 'A'] > 0) len++;
+                letter[cs[i] - 'A']--;
+                if(len == t.length()){
+                    while(letter[cs[start] -'A'] < 0) letter[cs[start++] -'A']++;
+                    if((f-h) == 0 || (f-h) > (i-start)){
+                        h = start;
+                        f = i+1;
+                    }
+                    if(f-h == t.length()) return s.substring(h,f);
+                    letter[cs[start++] - 'A']++;
+                    len--;
+                }
+            }
+        }
+        return s.substring(h,f);
+    }
+}
