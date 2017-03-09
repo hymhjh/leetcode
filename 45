@@ -1,0 +1,23 @@
+public class Solution {
+    public int jump(int[] nums) {
+        int[] from = new int[nums.length];
+        for(int i=0; i<nums.length; i++){
+            if((i+nums[i]) < nums.length-1) from[i+nums[i]] = from[i+nums[i]] == 0 ? (i + 1) : from[i+nums[i]];
+            else {
+                from[nums.length-1] = i+1;
+                break;
+            }
+        }
+        int pos = from[nums.length-1], count = 0;
+        for(int i=nums.length-1; i>0; i--){
+            if(from[i] == 0 || from[i] > pos) from[i] = pos;
+            else pos = from[i];
+        }
+        pos = nums.length-1;
+        while(pos > 0){
+            pos = from[pos]-1;
+            count++;
+        }
+        return count;
+    }
+}
