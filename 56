@@ -1,0 +1,28 @@
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> ret = new ArrayList<Interval>();
+        if(intervals.size() == 0 || intervals.size() == 1) return intervals;
+        Comparator<Interval> comp = new Comparator<Interval>(){
+            public int compare(Interval i1, Interval i2){
+                return i1.start - i2.start;
+            }
+        };
+        Collections.sort(intervals, comp);
+        int s = intervals.get(0).start, e = intervals.get(0).end;
+        for(int i=1; i<intervals.size(); i++){
+            if(e >= intervals.get(i).end) continue;
+            else{
+                if(e >= intervals.get(i).start) e = intervals.get(i).end;
+                else{
+                    Interval temp = new Interval(s, e);
+                    ret.add(temp);
+                    s = intervals.get(i).start;
+                    e = intervals.get(i).end;
+                }
+            }
+        }
+        Interval temp = new Interval(s, e);
+        ret.add(temp);
+        return ret;
+    }
+}
