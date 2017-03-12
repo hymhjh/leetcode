@@ -1,0 +1,29 @@
+public class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) return true;
+        ListNode slow = head, help = null, quick = head.next;
+        while(true){
+            if(quick == null) {//奇数个node
+                head = head.next;
+                break;
+            }
+            if(quick.next == null){//偶数个node
+                head = head.next;
+                slow.next = help;
+                help = slow;
+                break;
+            }
+            quick = quick.next.next;
+            head = head.next;
+            slow.next = help;
+            help = slow;
+            slow = head;
+        }
+        while(help != null && head != null){
+            if(help.val != head.val) return false;
+            help = help.next;
+            head = head.next;
+        }
+        return true;
+    }
+}
