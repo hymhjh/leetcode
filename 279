@@ -1,0 +1,14 @@
+public class Solution {
+    public int numSquares(int n) {
+        int[] square = new int[n+1];
+        for(int i=1; i<n+1; i++){
+            square[i] = Integer.MAX_VALUE;
+        }
+        for(int i=0; i<n; i++){
+            for(int j=1; (i+j*j)<=n; j++){
+                square[i+j*j] = Math.min(square[i+j*j], square[i]+1);
+            }
+        }
+        return square[n];
+    }
+}
