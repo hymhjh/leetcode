@@ -1,0 +1,49 @@
+public class MedianFinder {
+
+    Comparator<Integer> comp = new Comparator<Integer>(){
+        public int compare(Integer i1, Integer i2){
+            return i2 - i1;
+        }
+    };
+    PriorityQueue<Integer> min;
+    PriorityQueue<Integer> max;
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        this.min = new PriorityQueue<>();
+        this.max = new PriorityQueue<>(1, comp);
+    }
+    
+    public void addNum(int num) {
+        if(min.size() == 0 && max.size() == 0) max.offer(num);
+        else if(max.size() > min.size()){
+            if(num < max.peek()){
+                min.offer(max.poll());
+                max.offer(num);
+            }else{
+                min.offer(num);
+            }
+        }
+        else if(max.size() < min.size()){
+            if(num > min.peek()){
+                max.offer(min.poll());
+                min.offer(num);
+            }else{
+                max.offer(num);
+            }
+        }
+        else{
+            if(num > min.peek()) min.offer(num);
+            else if(num < max.peek()) max.offer(num);
+            else max.offer(num);
+        }
+    }
+    
+    public double findMedian() {
+        if(min.size() == 0 && max.size() == 0) return 0.0;
+        if(min.size() == max.size()) return (max.peek()+min.peek())/2.0;
+        else{
+            if(max.size() > min.size()) return max.peek();
+            else return min.peek();
+        }
+    }
+}
