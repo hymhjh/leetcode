@@ -1,0 +1,16 @@
+func canJump(nums []int) bool {
+    if len(nums) == 0 {
+        return true
+    }
+    maxStep, finalStep := nums[0], len(nums) - 1
+    for i, v := range nums {
+        if maxStep < i + v && maxStep >= i {
+            maxStep = i + v
+        }
+    }
+
+    if maxStep < finalStep {
+        return false
+    }
+    return true
+}
