@@ -1,0 +1,19 @@
+// https://leetcode.cn/problems/length-of-last-word/
+func lengthOfLastWord(s string) int {
+    length, start, end := len(s), 0, 0
+    isBlank := true
+    for i := length-1; i >=0; i-- {
+        if isBlank && s[i] == ' ' {
+            continue
+        } else if isBlank {
+            isBlank = false
+            start, end = i, i
+        } else if !isBlank && s[i] == ' ' {
+            break
+        } else {
+            start = i
+        }
+    }
+    
+    return end - start + 1
+}
