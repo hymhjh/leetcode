@@ -1,0 +1,29 @@
+func setZeroes(matrix [][]int)  {
+    if len(matrix) == 0 {
+        return
+    }
+
+    nMap, mMap := make(map[int]int), make(map[int]int)
+
+    n, m := len(matrix), len(matrix[0])
+    for i := 0; i < n; i++ {
+        for j := 0; j < m; j++ {
+            if matrix[i][j] == 0 {
+                nMap[i] = 1
+                mMap[j] = 1
+            }
+        }
+    }
+    //fmt.Println(nMap)
+    for i := 0; i < n; i++ {
+        for j := 0; j < m; j++ {
+            _, okN := nMap[i]
+            _, okM := mMap[j]
+            if okN || okM {
+                matrix[i][j] = 0
+            }
+        }
+    }
+
+    return
+}
